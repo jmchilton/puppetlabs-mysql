@@ -18,7 +18,9 @@ class mysql::server::backups {
   file { 'mysql_backup_cron_file':
     path => "$real_mysql_backup_dir/cron.sh",    
     mode => 0770,
-    content => "#!/bin/bash\n/usr/bin/mysqldump -uroot -p${mysql_root_password} --default-character-set=utf8 --all-databases --all --flush-logs --lock-tables --single-transaction | /bin/gzip > ${real_mysql_backup_dir}/mysqldump`date '+%F_%H-%M-%S'`.sql.gz > /tmp/mysql_cron_output 2&>1",
+#    content => "#!/bin/bash\n/usr/bin/mysqldump -uroot -p${mysql_root_password} --default-character-set=utf8 --all-databases --all --flush-logs --lock-tables --single-transaction | /bin/gzip > ${real_mysql_backup_dir}/mysqldump`date '+%F_%H-%M-%S'`.sql.gz > /tmp/mysql_cron_output 2&>1",
+    content => "#!/bin/bash\n/usr/bin/mysqldump -uroot -p${mysql_root_password} --default-character-set=utf8 --all-databases --flush-logs --lock-tables --single-transaction | /bin/gzip > ${real_mysql_backup_dir}/mysqldump`date '+%F_%H-%M-%S'`.sql.gz",
+    
   }
 
   cron { "mysql_backup_cron" :
